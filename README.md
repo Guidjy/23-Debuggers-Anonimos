@@ -63,6 +63,9 @@ O **gerencia.ia** injeta IA em pontos críticos do fluxo de trabalho para elimin
 ### 1. Backend (Servidor)
 
 ```bash
+npm install react-router-dom
+npm install react-icons
+npm start
 # Clone o repositório e acesse a pasta
 git clone [https://github.com/seu-usuario/seu-repositorio.git](https://github.com/seu-usuario/seu-repositorio.git)
 cd seu-repositorio/backend_folder

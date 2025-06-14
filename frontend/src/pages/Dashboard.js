@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import Header from '../components/Header';
-import SideBar from '../components/SideBar';
+import { useNavigate } from 'react-router-dom'; // Não esqueça de importar!
+import Header from '../components/Header'; // Verifique o caminho real do seu componente Header
+import SideBar from '../components/SideBar'; // Verifique o caminho real do seu componente SideBar
 
 function Dashboard() {
   const [taskLists, setTaskLists] = useState([
@@ -41,11 +42,18 @@ function Dashboard() {
     },
   ]);
 
+  const navigate = useNavigate(); // Inicialize o hook de navegação aqui
+
   const handleDelete = (id) => {
     const confirm = window.confirm('Tem certeza que deseja excluir este projeto?');
     if (confirm) {
       setTaskLists((prev) => prev.filter((proj) => proj.id !== id));
     }
+  };
+
+  // Nova função para lidar com o clique no card
+  const handleCardClick = (id) => {
+    navigate(`/project/${id}`); // Redireciona para a rota do ProjectItem com o ID
   };
 
   return (
@@ -69,12 +77,16 @@ function Dashboard() {
 
             <div className="task-lists">
               {taskLists.map((list) => (
-                <div key={list.id} className="task-list">
+                <div
+                  key={list.id}
+                  className="task-list"
+                  onClick={() => handleCardClick(list.id)} // Adicionado o onClick aqui!
+                >
                   <button
                     className="delete-button"
                     title="Excluir projeto"
                     onClick={(e) => {
-                      e.stopPropagation(); // previne propagação caso clique no card
+                      e.stopPropagation(); // MUITO IMPORTANTE: previne que o clique no botão de exclusão também ative a navegação do card
                       handleDelete(list.id);
                     }}
                   >
@@ -170,7 +182,7 @@ function Dashboard() {
             display: flex;
             flex-direction: column;
             position: relative;
-            cursor: pointer;
+            cursor: pointer; /* Adiciona o cursor de ponteiro para indicar que é clicável */
             transition: transform 0.2s ease, box-shadow 0.2s ease;
           }
 

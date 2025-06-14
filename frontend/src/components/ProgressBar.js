@@ -12,7 +12,7 @@ const ProgressBar = ({ percentage, color = '#4CAF50', height = 20 }) => {
 
   const containerStyle = {
     height: height,
-    width: '100%',
+    width: '70%',
     backgroundColor: '#e0e0e0',
     borderRadius: height / 2,
     overflow: 'hidden'
