@@ -195,3 +195,32 @@ ul {
 .chat-floating-button:active {
   transform: scale(0.95);
 }
+.back-to-dashboard-button {
+  position: fixed; /* Fixado na viewport */
+  bottom: 30px; /* Alinhado com o botão de chat */
+  right: 100px; /* Deslocado para a esquerda para não sobrepor o botão de chat */
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #60a5fa; /* Uma cor diferente para distinção */
+  color: white;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(96, 165, 250, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 1000; /* Garante que fique acima de outros elementos */
+}
+
+.back-to-dashboard-button:hover {
+  background-color: #3b82f6;
+  transform: scale(1.1);
+  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
+}
+
+.back-to-dashboard-button:active {
+  transform: scale(0.95);
+}

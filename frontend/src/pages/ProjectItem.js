@@ -2,7 +2,8 @@ import ProgressBar from "../components/ProgressBar";
 import Header from "../components/Header";
 import SideBar from "../components/SideBar"; // Certifique-se de que o caminho está correto
 import ButtonCircle from "../components/ButtonCircle";
-import { FaRocketchat } from 'react-icons/fa';
+import { FaRocketchat, FaArrowLeft } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom'; // Importe useNavigate
 import "./ProjectItem.css";
 
 const ProjectItem = () => {
@@ -23,6 +24,12 @@ const ProjectItem = () => {
       tasks: ["Planejar sprint", "Reunião com cliente"],
     },
   ];
+
+  const navigate = useNavigate(); // Inicialize o hook de navegação
+
+  const handleGoBack = () => {
+    navigate('/dashboard'); // Navega de volta para o dashboard
+  };
 
   return (
     <div className="project-page-layout"> {/* Renomeado de 'area-dash' para algo mais descritivo para esta página */}
@@ -57,6 +64,10 @@ const ProjectItem = () => {
               ))}
             </div>
           </div>
+           {/* Botão flutuante para voltar ao dashboard */}
+           <button className="back-to-dashboard-button" onClick={handleGoBack}>
+            <FaArrowLeft/>
+          </button>
           <button className="chat-floating-button">
             <FaRocketchat/>
           </button>
