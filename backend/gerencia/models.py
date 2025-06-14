@@ -68,7 +68,7 @@ class CardKanban(models.Model):
     data_de_entrega = models.DateField(blank=True, null=True)    
     
     quadro = models.ForeignKey(QuadroKanban, on_delete=models.CASCADE)
-    responsaveis = models.ManyToManyField(Funcionario, related_name='tarefas', blank=True, null=True)
+    responsaveis = models.ManyToManyField(Funcionario, related_name='tarefas', blank=True)
 
     
     def __str__(self):

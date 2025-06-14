@@ -85,7 +85,7 @@ def gerar_relatorio(request, projeto_id):
     
     # gera o relatório com a api do gemini
     prompt += texto_pdf
-    client = genai.Client(api_key="# NÃO FAZER PUSH DA KEY DA API CARALEO")    # NÃO FAZER PUSH DA KEY DA API CARALEO
+    client = genai.Client(api_key=" # NÃO FAZER PUSH DA KEY DA API CARALEO")    # NÃO FAZER PUSH DA KEY DA API CARALEO
     response = client.models.generate_content(
         model="gemini-2.0-flash", contents=prompt
     )
@@ -113,6 +113,9 @@ def gerar_cards_kanban(request, projeto_id):
     except QuadroKanban.DoesNotExist:
         nome_do_projeto = projeto.nome
         quadro = QuadroKanban.objects.create(titulo=f'Quadro {nome_do_projeto}', projeto=projeto)
+    else:
+        if quadro.numero_de_cards > 0:
+            return Response({'erro': 'ja foram gerados cards para esse projeto'}, status=400)
     
     # query a eap
     try:
@@ -133,7 +136,7 @@ def gerar_cards_kanban(request, projeto_id):
     # faz uma prompt para o gemini
     prompt = 'Formate os itens da estrutura analítica do projeto no seguinte formato json: {"descricao": "<Descrição da tarefa>"}'
     prompt += texto_pdf
-    client = genai.Client(api_key="# NÃO FAZER PUSH DA KEY DA API CARALEO")    # NÃO FAZER PUSH DA KEY DA API CARALEO
+    client = genai.Client(api_key=" # NÃO FAZER PUSH DA KEY DA API CARALEO")    # NÃO FAZER PUSH DA KEY DA API CARALEO
     response = client.models.generate_content(
         model="gemini-2.0-flash", contents=prompt
     )
@@ -150,9 +153,18 @@ def gerar_cards_kanban(request, projeto_id):
         cards.append(json.loads(item))
     
     # cria cards
+    cards_criados = []
     for card in cards:
-        CardKanban.objects.create(tarefa=card['descricao'], quadro=quadro)
+        novo_card = CardKanban(
+            tarefa=card['descricao'],
+            quadro=quadro
+        )
+        novo_card.full_clean()
+        novo_card.save()
+        cards_criados.append(novo_card)
         
-    
-
-    return Response({'response': texto_limpo})
+    quadro.numero_de_cards = len(cards_criados)
+    quadro.save()
+        
+    card_serializer = CardKanbanSerializer(cards_criados, many=True)
+    return Response({'cards': card_serializer.data})
