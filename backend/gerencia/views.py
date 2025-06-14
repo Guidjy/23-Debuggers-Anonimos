@@ -85,7 +85,7 @@ def gerar_relatorio(request, projeto_id):
     
     # gera o relatório com a api do gemini
     prompt += texto_pdf
-    client = genai.Client(api_key="AIzaSyBqoTR04zp7oonhJQfUiD4T3UhtMgG11Ds")    # NÃO FAZER PUSH DA KEY DA API CARALEO
+    client = genai.Client(api_key="# NÃO FAZER PUSH DA KEY DA API CARALEO")    # NÃO FAZER PUSH DA KEY DA API CARALEO
     response = client.models.generate_content(
         model="gemini-2.0-flash", contents=prompt
     )
@@ -136,7 +136,7 @@ def gerar_cards_kanban(request, projeto_id):
     # faz uma prompt para o gemini
     prompt = 'Formate os itens da estrutura analítica do projeto no seguinte formato json: {"descricao": "<Descrição da tarefa>"}, e retorne-os em uma lista'
     prompt += texto_pdf
-    client = genai.Client(api_key="AIzaSyBqoTR04zp7oonhJQfUiD4T3UhtMgG11Ds")    # NÃO FAZER PUSH DA KEY DA API CARALEO
+    client = genai.Client(api_key="# NÃO FAZER PUSH DA KEY DA API CARALEO")    # NÃO FAZER PUSH DA KEY DA API CARALEO
     response = client.models.generate_content(
         model="gemini-2.0-flash", contents=prompt
     )
@@ -175,7 +175,7 @@ def perguntar_chat(request):
     pergunta = request.data.get('pergunta')
     
     if pergunta:
-        client = genai.Client(api_key="AIzaSyBqoTR04zp7oonhJQfUiD4T3UhtMgG11Ds")    # NÃO FAZER PUSH DA KEY DA API CARALEO
+        client = genai.Client(api_key="# NÃO FAZER PUSH DA KEY DA API CARALEO")    # NÃO FAZER PUSH DA KEY DA API CARALEO
         response = client.models.generate_content(
             model="gemini-2.0-flash", contents=pergunta
         )
