@@ -110,7 +110,7 @@ function Dashboard() {
 
           .card {
             background: white;
-            margin: 2rem auto;
+            margin: 5rem auto 2rem auto;
             padding: 2rem;
             border-radius: 1rem;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
