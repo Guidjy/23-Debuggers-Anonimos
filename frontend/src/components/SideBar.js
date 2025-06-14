@@ -1,12 +1,12 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 function Layout() {
-  const [active, setActive] = useState('dashboard');
+  const [active, setActive] = useState("dashboard");
 
   const links = [
-    { id: 'dashboard', label: 'Dashboard', href: '#' },
-    { id: 'projects', label: 'Projetos', href: '#' },
-    { id: 'settings', label: 'Configurações', href: '#' },
+    { id: "dashboard", label: "Dashboard", href: "#" },
+    { id: "projects", label: "Projetos", href: "#" },
+    { id: "settings", label: "Configurações", href: "#" },
   ];
 
   return (
@@ -23,7 +23,7 @@ function Layout() {
                 <li key={id}>
                   <a
                     href={href}
-                    className={active === id ? 'active' : ''}
+                    className={active === id ? "active" : ""}
                     onClick={(e) => {
                       e.preventDefault();
                       setActive(id);
@@ -36,7 +36,6 @@ function Layout() {
             </ul>
           </nav>
         </aside>
-
       </div>
 
       <style>{`
