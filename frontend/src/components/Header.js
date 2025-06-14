@@ -1,16 +1,68 @@
+import { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 function Header() {
+  const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+  const dropdownRef = useRef(null);
+
+  // Fecha o dropdown se clicar fora
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  function handleLogout() {
+    // Aqui você pode limpar tokens ou estado, se tiver
+    // Exemplo: localStorage.removeItem('token');
+    navigate('/login');
+  }
+
   return (
     <>
       <header className="header">
-        {/* Logo */}
         <div className="logo">
           gerencia.<span className="logo-highlight">ia</span>
         </div>
 
-        {/* Perfil */}
-        <div className="profile">
-          <div className="avatar">V</div>
-          <span className="profile-name">Vitória</span>
+        <div className="profile" ref={dropdownRef}>
+          <button
+            className="profile-button"
+            onClick={() => setOpen((o) => !o)}
+            aria-haspopup="true"
+            aria-expanded={open}
+          >
+            <div className="avatar">V</div>
+            <span className="profile-name">Vitória</span>
+            <svg
+              className={`chevron ${open ? 'open' : ''}`}
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              width="16"
+              height="16"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+
+          {open && (
+            <ul className="dropdown-menu" role="menu">
+              <li>
+                <button onClick={handleLogout} role="menuitem" className="dropdown-item">
+                  Sair
+                </button>
+              </li>
+            </ul>
+          )}
         </div>
       </header>
 
@@ -36,11 +88,19 @@ function Header() {
             color: #93c5fd; /* azul claro */
           }
           .profile {
+            position: relative;
+            user-select: none;
+          }
+          .profile-button {
             display: flex;
             align-items: center;
             gap: 0.75rem;
+            background: none;
+            border: none;
             color: white;
-            user-select: none;
+            cursor: pointer;
+            font: inherit;
+            padding: 0;
           }
           .avatar {
             width: 40px;
@@ -56,6 +116,38 @@ function Header() {
           }
           .profile-name {
             font-weight: 500;
+          }
+          .chevron {
+            transition: transform 0.2s ease;
+          }
+          .chevron.open {
+            transform: rotate(180deg);
+          }
+          .dropdown-menu {
+            position: absolute;
+            right: 0;
+            top: 100%;
+            margin-top: 0.5rem;
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            min-width: 120px;
+            z-index: 100;
+            padding: 0.5rem 0;
+          }
+          .dropdown-item {
+            width: 100%;
+            padding: 0.5rem 1rem;
+            background: none;
+            border: none;
+            text-align: left;
+            cursor: pointer;
+            font-size: 1rem;
+            color: #1e293b;
+            transition: background-color 0.2s ease;
+          }
+          .dropdown-item:hover {
+            background-color: #e0e7ff;
           }
         `}
       </style>
