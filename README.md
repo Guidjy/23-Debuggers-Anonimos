@@ -1,6 +1,10 @@
 # code-race-25
 Projeto da hackathon coderace 2025 na AMF (TESTEE)
 
+# pip
+
+pip install {TODO} -q -U google-genai PyPDF2
+
 # Documentação dos Modelos Django
 
 ## Modelo: Projeto

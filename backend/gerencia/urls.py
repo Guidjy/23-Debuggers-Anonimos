@@ -21,6 +21,7 @@ router.register(r"card_kanban", views.CardKanbanViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('gerar_relatorio/<int:projeto_id>', views.gerar_relatorio),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
