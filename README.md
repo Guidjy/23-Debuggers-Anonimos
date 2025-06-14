@@ -66,9 +66,6 @@ O **gerencia.ia** injeta IA em pontos críticos do fluxo de trabalho para elimin
 ### 1. Backend (Servidor)
 
 ```bash
-npm install react-router-dom
-npm install react-icons
-npm start
 # Clone o repositório e acesse a pasta
 git clone [https://github.com/seu-usuario/seu-repositorio.git](https://github.com/seu-usuario/seu-repositorio.git)
 cd seu-repositorio/backend_folder
@@ -92,16 +89,7 @@ cd ../frontend_folder
 # Instale as dependências e inicie
 npm install
 npm install react-icons
+npm install react-router-dom
 npm start
 ```
-> Aplicação disponível em `http://localhost:3000`.
-
----
-[React-shield]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
-[React-url]: https://reactjs.org/
-[Django-shield]: https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=white
-[Django-url]: https://www.djangoproject.com/
-[Python-shield]: https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white
-[Python-url]: https://www.python.org/
-[SQLite-shield]: https://img.shields.io/badge/SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white
-[SQLite-url]: https://www.sqlite.org/index.html
+> Aplicação disponível em `http://localhost:3000`
