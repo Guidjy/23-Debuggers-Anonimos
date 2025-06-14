@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Não esqueça de importar!
-import Header from '../components/Header'; // Verifique o caminho real do seu componente Header
-import SideBar from '../components/SideBar'; // Verifique o caminho real do seu componente SideBar
+import { useNavigate } from 'react-router-dom';
+import Header from '../components/Header';
+import SideBar from '../components/SideBar';
 
 function Dashboard() {
   const [taskLists, setTaskLists] = useState([
@@ -42,7 +42,9 @@ function Dashboard() {
     },
   ]);
 
-  const navigate = useNavigate(); // Inicialize o hook de navegação aqui
+  const [showModal, setShowModal] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const navigate = useNavigate();
 
   const handleDelete = (id) => {
     const confirm = window.confirm('Tem certeza que deseja excluir este projeto?');
@@ -51,9 +53,18 @@ function Dashboard() {
     }
   };
 
-  // Nova função para lidar com o clique no card
   const handleCardClick = (id) => {
-    navigate(`/project/${id}`); // Redireciona para a rota do ProjectItem com o ID
+    navigate(`/project/${id}`);
+  };
+
+  const handleUpload = () => {
+    if (selectedFile) {
+      alert(`Documento enviado: ${selectedFile.name}`);
+      setShowModal(false);
+      setSelectedFile(null);
+    } else {
+      alert('Por favor, selecione um arquivo PDF.');
+    }
   };
 
   return (
@@ -67,9 +78,9 @@ function Dashboard() {
             <div className="card-header">
               <h2>Meus Projetos</h2>
               <button
-                className="add-button"
+                className="add-button-header"
                 title="Adicionar projeto"
-                aria-label="Adicionar projeto"
+                onClick={() => setShowModal(true)}
               >
                 +
               </button>
@@ -80,13 +91,13 @@ function Dashboard() {
                 <div
                   key={list.id}
                   className="task-list"
-                  onClick={() => handleCardClick(list.id)} // Adicionado o onClick aqui!
+                  onClick={() => handleCardClick(list.id)}
                 >
                   <button
                     className="delete-button"
                     title="Excluir projeto"
                     onClick={(e) => {
-                      e.stopPropagation(); // MUITO IMPORTANTE: previne que o clique no botão de exclusão também ative a navegação do card
+                      e.stopPropagation();
                       handleDelete(list.id);
                     }}
                   >
@@ -104,6 +115,25 @@ function Dashboard() {
           </div>
         </div>
       </div>
+
+      {showModal && (
+        <div className="modal-overlay">
+          <div className="modal">
+            <h3>Upload de Documento (PDF)</h3>
+            <button
+              className="add-button"
+              title="Adicionar novo projeto via PDF"
+              onClick={() => setShowModal(true)}
+            >
+              <span className="add-icon">➕</span> <span className="add-text">Adicionar</span>
+            </button>
+            <div className="modal-buttons">
+              <button onClick={() => setShowModal(false)}>Cancelar</button>
+              <button onClick={handleUpload}>Enviar</button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <style>
         {`
@@ -131,7 +161,6 @@ function Dashboard() {
             display: flex;
             flex-direction: column;
             gap: 1.5rem;
-            flex-grow: 1;
           }
 
           .card-header {
@@ -145,7 +174,7 @@ function Dashboard() {
             font-weight: 700;
           }
 
-          .add-button {
+          .add-button-header {
             background-color: #2563eb;
             color: white;
             font-size: 2rem;
@@ -161,8 +190,39 @@ function Dashboard() {
             align-items: center;
           }
 
+          .add-button-header:hover {
+            background-color: #1e40af;
+          }
+
+          .add-button {
+            display: center;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: #2563eb;
+            color: white;
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 0.8rem 5rem;
+            margin-top: 1.5rem;
+            border: none;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
+            transition: all 0.25s ease-in-out;
+          }
+
           .add-button:hover {
             background-color: #1e40af;
+            transform: translateY(-2px);
+          }
+
+          .add-icon {
+            font-size: 1.25rem;
+            transition: transform 0.3s ease;
+          }
+
+          .add-button:hover .add-icon {
+            transform: scale(1.2) rotate(10deg);
           }
 
           .task-lists {
@@ -182,7 +242,7 @@ function Dashboard() {
             display: flex;
             flex-direction: column;
             position: relative;
-            cursor: pointer; /* Adiciona o cursor de ponteiro para indicar que é clicável */
+            cursor: pointer;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
           }
 
@@ -229,6 +289,57 @@ function Dashboard() {
               flex: 1 1 100%;
               max-width: 100%;
             }
+          }
+
+          .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+          }
+
+          .modal {
+            background: white;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+          }
+
+          .modal input {
+            margin-top: 1rem;
+            margin-bottom: 1.5rem;
+          }
+
+          .modal-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-top: 1rem; 
+          }
+
+          .modal-buttons button {
+            padding: 0.5rem 1.25rem;
+            border: none;
+            background-color: #2563eb;
+            color: white;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            padding: 0.5rem 2.5rem;
+            transition: background-color 0.3s ease;
+            font-weight: 500;
+          }
+
+          .modal-buttons button:hover {
+            background-color: #1e40af;
           }
         `}
       </style>
