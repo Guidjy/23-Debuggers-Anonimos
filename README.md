@@ -1,4 +1,4 @@
-# Projeto: Inteligência Artificial na Gestão de Projetos - gerencia.ia
+# gerencia.ia: Inteligência Artificial na Gestão de Projetos
 
 ## 🧠 Nome da Equipe
 **Debuggers Anônimos**
@@ -23,21 +23,30 @@
 **Gestão de Projetos**
 
 ## ❗ Problema a Ser Resolvido
-Falta de organização e visão centralizada sobre o andamento de projetos em uma empresa.
+A gestão de projetos tradicional sofre com ineficiências que atrasam a entrega de valor.
 
+* **Dados Fragmentados:** Planos e status existem em silos, impedindo uma visão unificada do progresso.
+* **Alta Carga Operacional:** Gestores investem tempo excessivo em tarefas manuais, como criar cronogramas e compilar relatórios.
+* **Decisões Reativas:** A falta de insights em tempo real leva a uma gestão que apenas reage a problemas, em vez de antecipá-los.
 ---
 
 ## ✅ Descrição da Solução Proposta
-A proposta é utilizar inteligência artificial para:
+O **gerencia.ia** injeta IA em pontos críticos do fluxo de trabalho para eliminar a fricção e potencializar a tomada de decisão.
 
-- Gerar automaticamente relatórios com o **estado atual do projeto**, com base nas tarefas e progresso;
-- Ler uma **EAP (Estrutura Analítica do Projeto)** fornecida pelo usuário e montar automaticamente um **quadro Kanban**, distribuindo as tarefas por etapas.
+### 1. Automação da Estrutura do Projeto
 
+* **Como funciona:** A IA analisa um documento **EAP (Estrutura Analítica do Projeto)** e o converte instantaneamente em um **quadro Kanban** funcional.
+* **Resultado:** Elimina o tempo de setup manual, reduz erros de transcrição e acelera o início dos trabalhos da equipe.
+
+### 2. Análise de Progresso Inteligente
+
+* **Como funciona:** A IA monitora o andamento das tarefas e gera, sob demanda, **resumos executivos** sobre a saúde do projeto.
+* **Resultado:** Transforma a gestão reativa em **proativa**, baseando decisões em insights atuais e não em compilações manuais demoradas.
 ---
 
 ## 🛠️ Tecnologias Utilizadas
 
-- **Frontend**: React.js, CSS, JavaScript
+- **Frontend**: React.js, react-icons, CSS, JavaScript
 - **Backend**: Django, Python
 - **Banco de Dados**: SQLite
 - **Outras**: React Router Dom
@@ -48,15 +57,48 @@ A proposta é utilizar inteligência artificial para:
 
 ## 📦 Instruções de Instalação e Execução
 
-### Frontend
+
+**Pré-requisitos:** [Node.js](https://nodejs.org/) (v16+), [Python](https://www.python.org/) (v3.9+).
+
+### 1. Backend (Servidor)
 
 ```bash
 npm install react-router-dom
 npm install react-icons
 npm start
+# Clone o repositório e acesse a pasta
+git clone [https://github.com/seu-usuario/seu-repositorio.git](https://github.com/seu-usuario/seu-repositorio.git)
+cd seu-repositorio/backend_folder
 
-### Backend
+# Crie e ative um ambiente virtual
+python -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
 
+# Instale as dependências e rode o servidor
 pip install -r requirements.txt
 python manage.py runserver
+```
+> Servidor disponível em `http://127.0.0.1:8000`.
 
+### 2. Frontend (Cliente)
+
+```bash
+# Em outro terminal, acesse a pasta do frontend
+cd ../frontend_folder
+
+# Instale as dependências e inicie
+npm install
+npm install react-icons
+npm start
+```
+> Aplicação disponível em `http://localhost:3000`.
+
+---
+[React-shield]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
+[React-url]: https://reactjs.org/
+[Django-shield]: https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=white
+[Django-url]: https://www.djangoproject.com/
+[Python-shield]: https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white
+[Python-url]: https://www.python.org/
+[SQLite-shield]: https://img.shields.io/badge/SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white
+[SQLite-url]: https://www.sqlite.org/index.html
