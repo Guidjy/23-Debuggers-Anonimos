@@ -2,12 +2,13 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
 from rest_framework import viewsets
-from .models import Projeto, RelatorioProjeto, Funcionario, TermoAberturaProjeto, EstruturaAnaliticaProjeto, TarefaEAP, QuadroKanban, CardKanban
-from .serializers import ProjetoSerializer, RelatorioProjetoSerializer, FuncionarioSerializer, TAPSerializer, EAPSerializer, TarefaEAPSerializer, QuadroKanbanSerializer, CardKanbanSerializer
+from .models import Projeto, RelatorioProjeto, Funcionario, TermoAberturaProjeto, EstruturaAnaliticaProjeto, QuadroKanban, CardKanban
+from .serializers import ProjetoSerializer, RelatorioProjetoSerializer, FuncionarioSerializer, TAPSerializer, EAPSerializer, QuadroKanbanSerializer, CardKanbanSerializer
 
 from google import genai
 import PyPDF2
 import re
+import json
 
 
 class ProjetoViewSet(viewsets.ModelViewSet):
@@ -33,11 +34,6 @@ class TAPViewSet(viewsets.ModelViewSet):
 class EAPViewSet(viewsets.ModelViewSet):
     queryset = EstruturaAnaliticaProjeto.objects.all()
     serializer_class = EAPSerializer
- 
-
-class TarefaEAPViewSet(viewsets.ModelViewSet):
-    queryset = TarefaEAP.objects.all()
-    serializer_class = TarefaEAPSerializer
     
 
 class QuadroKanbanViewSet(viewsets.ModelViewSet):
@@ -99,4 +95,64 @@ def gerar_relatorio(request, projeto_id):
     return Response({
         'resposta': texto_limpo,
         'promt': prompt
-    })
+    }, status=200)
+    
+
+@api_view(['GET'])
+def gerar_cards_kanban(request, projeto_id):
+    
+    # verifica se existe um projeto 
+    try:
+        projeto = Projeto.objects.get(id=projeto_id)
+    except Projeto.DoesNotExist:
+        return Response({'erro', f'Não existe um projeto com esse id ({id})'}, status=400)
+    
+    # query o Quadro kanban
+    try:
+        quadro = QuadroKanban.objects.get(projeto=projeto)
+    except QuadroKanban.DoesNotExist:
+        nome_do_projeto = projeto.nome
+        quadro = QuadroKanban.objects.create(titulo=f'Quadro {nome_do_projeto}', projeto=projeto)
+    
+    # query a eap
+    try:
+        eap = EstruturaAnaliticaProjeto.objects.get(projeto=projeto)
+    except Projeto.DoesNotExist:
+        return Response({'erro', f'Esse projeto não possui ume eap.'}, status=400)
+    
+    # extrai o texto da eap
+    documento = eap.documento
+    texto_pdf = ''
+    if documento:
+        reader = PyPDF2.PdfReader(documento)
+        for page in reader.pages:
+            texto_pdf += page.extract_text() or ''
+    # limpa o pdf
+    texto_pdf = re.sub(r'[^A-Za-zÀ-ÖØ-öø-ÿ0-9]+', ' ', texto_pdf).strip()
+    
+    # faz uma prompt para o gemini
+    prompt = 'Formate os itens da estrutura analítica do projeto no seguinte formato json: {"descricao": "<Descrição da tarefa>"}'
+    prompt += texto_pdf
+    client = genai.Client(api_key="# NÃO FAZER PUSH DA KEY DA API CARALEO")    # NÃO FAZER PUSH DA KEY DA API CARALEO
+    response = client.models.generate_content(
+        model="gemini-2.0-flash", contents=prompt
+    )
+    # limpa a resposta
+    texto_limpo = re.sub(r'\s+', ' ', response.text) 
+    texto_limpo = re.sub(r'[/]', ' ', texto_limpo).strip()
+    texto_limpo = re.findall(r'\[(.*?)\]', texto_limpo)
+    texto_limpo = texto_limpo[0]  # temos json em string
+    
+    # parte a string em jsons individuais
+    jsons = texto_limpo.split(',')
+    cards = []
+    for item in jsons:
+        cards.append(json.loads(item))
+    
+    # cria cards
+    for card in cards:
+        CardKanban.objects.create(tarefa=card['descricao'], quadro=quadro)
+        
+    
+
+    return Response({'response': texto_limpo})

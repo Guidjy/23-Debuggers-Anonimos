@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Projeto, RelatorioProjeto, Funcionario, TermoAberturaProjeto, EstruturaAnaliticaProjeto, TarefaEAP, QuadroKanban, CardKanban
+from .models import Projeto, RelatorioProjeto, Funcionario, TermoAberturaProjeto, EstruturaAnaliticaProjeto, QuadroKanban, CardKanban
 
         
 class ProjetoSerializer(serializers.ModelSerializer):
@@ -29,12 +29,6 @@ class TAPSerializer(serializers.ModelSerializer):
 class EAPSerializer(serializers.ModelSerializer):
     class Meta:
         model = EstruturaAnaliticaProjeto
-        fields = '__all__'
-        
-
-class TarefaEAPSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = TarefaEAP
         fields = '__all__'
         
         
