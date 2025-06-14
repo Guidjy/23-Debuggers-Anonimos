@@ -59,6 +59,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'backend.urls'
 
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -149,3 +150,4 @@ if PRODUCTION:
 else:
     # permite todas origens a fazerem requisições a nossa api
     CORS_ALLOW_ALL_ORIGINS = True
+

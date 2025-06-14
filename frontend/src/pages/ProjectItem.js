@@ -1,10 +1,13 @@
-import { useState, useRef, useEffect } from 'react'; // Importe useState, useRef e useEffect
-import { useNavigate } from 'react-router-dom';
+import { useState, useRef, useEffect } from 'react'; 
+import { useNavigate, useParams } from 'react-router-dom';
+
+import { FaRocketchat, FaArrowLeft, FaPaperPlane } from 'react-icons/fa';
+
 import ProgressBar from "../components/ProgressBar";
 import Header from "../components/Header";
 import SideBar from "../components/SideBar";
 import ButtonCircle from "../components/ButtonCircle";
-import { FaRocketchat, FaArrowLeft, FaPaperPlane } from 'react-icons/fa'; // Adicione FaPaperPlane para o botão de enviar
+
 import "./ProjectItem.css";
 
 const ProjectItem = () => {
@@ -27,7 +30,7 @@ const ProjectItem = () => {
   ];
 
   const navigate = useNavigate();
-  const messagesEndRef = useRef(null); // Ref para rolar automaticamente para a última mensagem
+  const messagesEndRef = useRef(null); 
 
   // Estados para o chat
   const [showChat, setShowChat] = useState(false);
@@ -61,17 +64,50 @@ const ProjectItem = () => {
     }
   };
 
+  // 🔥 File Upload Handler
+  const handleFileSubmit = async () => {
+    if (!file) {
+      alert("Selecione um arquivo primeiro.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('documento', file);
+    formData.append('projeto', params); // Assuming params.id is the project id
+
+    try {
+      const response = await fetch('http://127.0.0.1:8000/tap/', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.ok) {
+        alert("Arquivo enviado com sucesso!");
+      } else {
+        const errorData = await response.json();
+        alert("Erro ao enviar: " + JSON.stringify(errorData));
+      }
+    } catch (error) {
+      console.error("Erro:", error);
+      alert("Erro na conexão.");
+    }
+  };
+
+  const params = useParams();
+
   return (
     <div className="project-page-layout">
       <SideBar />
       <div className="project-main-content">
         <Header />
+        
         <div className="project-page-wrapper">
+        
           <div className="project-details-section">
             <div className="details-card-one">
               <ProgressBar percentage={90} color="#2563eb" height={30} />
               <ButtonCircle />
-              <button className="cta-button">Receber TAP</button>
+              <button className="cta-button" n>Receber TAP</button>
             </div>
             <div className="details-card-two">
               <h3>Relatório do Projeto</h3>
@@ -100,7 +136,7 @@ const ProjectItem = () => {
             <FaArrowLeft/>
           </button>
 
-          {/* Botão flutuante de chat - agora com onClick para togglar */}
+          {/* Botão flutuante de chat */}
           <button className="chat-floating-button" onClick={toggleChat}>
             <FaRocketchat/>
           </button>
@@ -122,7 +158,8 @@ const ProjectItem = () => {
                     </div>
                   ))
                 )}
-                <div ref={messagesEndRef} /> {/* Elemento para rolagem automática */}
+              <div ref={messagesEndRef} /> 
+                {/* Elemento para rolagem automática */}
               </div>
               <div className="chat-input-area">
                 <input

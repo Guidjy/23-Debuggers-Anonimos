@@ -1,50 +1,39 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import SideBar from '../components/SideBar';
 
 function Dashboard() {
-  const [taskLists, setTaskLists] = useState([
-    {
-      id: 1,
-      title: 'Projeto 1',
-      responsavel: 'Vitória',
-      entrega: '20/06/2025',
-      status: 'Em andamento',
-    },
-    {
-      id: 2,
-      title: 'Projeto 2',
-      responsavel: 'Giulia',
-      entrega: '25/06/2025',
-      status: 'Concluído',
-    },
-    {
-      id: 3,
-      title: 'Projeto 3',
-      responsavel: 'Lucas',
-      entrega: '30/06/2025',
-      status: 'Aguardando aprovação',
-    },
-    {
-      id: 4,
-      title: 'Projeto 4',
-      responsavel: 'Marcos',
-      entrega: '05/07/2025',
-      status: 'Em planejamento',
-    },
-    {
-      id: 5,
-      title: 'Projeto 5',
-      responsavel: 'Beatriz',
-      entrega: '10/07/2025',
-      status: 'Cancelado',
-    },
-  ]);
-
+  const [usuario, setUsuario] = useState('');
+  const [taskLists, setTaskLists] = useState([]);
+  const [loading, setLoading] = useState(true);  // controle de carregamento
   const [showModal, setShowModal] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
-  const navigate = useNavigate();
+  const navigate = useNavigate(); 
+
+  function handleLogin() {
+    // após validar login, pegar nome do usuário
+    const nomeDoUsuario = "Vitória"; // exemplo fixo, ou pegue do backend
+    localStorage.setItem('usuarioLogado', nomeDoUsuario);
+    // redirecionar, etc
+  }
+
+  useEffect(() => {
+    fetch('http://localhost:8000/buscar_projetos_usuario', {
+      method: 'GET',
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        setTaskLists(data.projetos);
+        setUsuario(data.criador)
+        setLoading(false); // dados carregados, para o spinner
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        setLoading(false); // mesmo se erro, para não travar o spinner
+      });
+  }, []);
 
   const handleDelete = (id) => {
     const confirm = window.confirm('Tem certeza que deseja excluir este projeto?');
@@ -67,7 +56,7 @@ function Dashboard() {
     }
   };
 
-  return (
+   return (
     <>
       <div className="dashboard">
         <SideBar />
@@ -87,30 +76,29 @@ function Dashboard() {
             </div>
 
             <div className="task-lists">
-              {taskLists.map((list) => (
-                <div
-                  key={list.id}
-                  className="task-list"
-                  onClick={() => handleCardClick(list.id)}
-                >
-                  <button
-                    className="delete-button"
-                    title="Excluir projeto"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleDelete(list.id);
-                    }}
+              {loading ? (
+                <div className="spinner"></div> // Spinner aparece aqui
+              ) : (
+                taskLists.map((list) => (
+                  <div
+                    key={list.id}
+                    className="task-list"
+                    onClick={() => handleCardClick(list.id)}
                   >
-                    ×
-                  </button>
-                  <h3 className="list-title">{list.title}</h3>
-                  <ul>
-                    <li><strong>Responsável:</strong> {list.responsavel}</li>
-                    <li><strong>Entrega:</strong> {list.entrega}</li>
-                    <li><strong>Status:</strong> {list.status}</li>
-                  </ul>
-                </div>
-              ))}
+                    <button
+                      className="delete-button"
+                      title="Excluir projeto"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDelete(list.id);
+                      }}
+                    >
+                      ×
+                    </button>
+                    <h3 className="list-title">{list.nome}</h3>
+                  </div>
+                ))
+              )}
             </div>
           </div>
         </div>
@@ -340,6 +328,21 @@ function Dashboard() {
 
           .modal-buttons button:hover {
             background-color: #1e40af;
+          }
+
+          .spinner {
+            margin: 3rem auto;
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #2563eb;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+          }
+
+          @keyframes spin {
+            0% { transform: rotate(0deg);}
+            100% { transform: rotate(360deg);}
           }
         `}
       </style>

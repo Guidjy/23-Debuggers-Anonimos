@@ -33,7 +33,6 @@ class Funcionario(models.Model):
     
 
 class TermoAberturaProjeto(models.Model):
-    titulo = models.CharField(max_length=50)
     documento = models.FileField(upload_to='documentos/')
     
     projeto = models.ForeignKey(Projeto, on_delete=models.CASCADE)

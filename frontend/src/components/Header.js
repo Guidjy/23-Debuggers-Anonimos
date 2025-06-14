@@ -4,8 +4,17 @@ import { FaUser } from 'react-icons/fa';
 
 function Header() {
   const [open, setOpen] = useState(false);
+  const [usuario, setUsuario] = useState('');
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
+
+  // Buscar nome do usuário salvo no localStorage
+  useEffect(() => {
+    const nomeSalvo = localStorage.getItem('usuarioLogado');
+    if (nomeSalvo) {
+      setUsuario(nomeSalvo);
+    }
+  }, []);
 
   // Fecha o dropdown se clicar fora
   useEffect(() => {
@@ -20,14 +29,19 @@ function Header() {
     };
   }, []);
 
+  function handleLogin() {
+    // após validar login, pegar nome do usuário
+    const nomeDoUsuario = "Vitória"; // exemplo fixo, ou pegue do backend
+    localStorage.setItem('usuarioLogado', nomeDoUsuario);
+    // redirecionar, etc
+  }
+
   function handleLogout() {
-    // Aqui você pode limpar tokens ou estado, se tiver
-    // Exemplo: localStorage.removeItem('token');
+    localStorage.removeItem('usuarioLogado'); 
     navigate('/login');
   }
 
   function handleLogoClick() {
-    // Atualiza a página ao clicar na logo
     window.location.reload();
   }
 
@@ -46,7 +60,7 @@ function Header() {
             aria-expanded={open}
           >
             <div className="avatar"><FaUser/></div>
-            <span className="profile-name">Vitória</span>
+              <span className="profile-name">{usuario}</span>
             <svg
               className={`chevron ${open ? 'open' : ''}`}
               xmlns="http://www.w3.org/2000/svg"

@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .models import User
 from .serializers import UserSerializer
+from django.views.decorators.csrf import csrf_exempt
 
 from email_validator import validate_email, EmailNotValidError
 
@@ -66,6 +67,7 @@ def register_user(request):
         return Response({'error': str(e)}, status=400)
     
 
+@csrf_exempt
 @api_view(['POST'])
 def login_user(request):
     """
@@ -81,6 +83,8 @@ def login_user(request):
     """
     username = request.data.get('username')
     password = request.data.get('password')
+    print(username)
+    print(password)
     
     if not username or not password:
         return Response({'error': 'Please fill in the form fields.'}, status=400)
@@ -175,3 +179,9 @@ def delete_user(request, id):
     
     return Response({'success': 'User Successfully deleted'}, status=200)
 
+
+@api_view(['GET'])
+def usuario_atual(request):
+    usuario = request.user
+    serializer = UserSerializer(usuario)
+    return Response(serializer.data)

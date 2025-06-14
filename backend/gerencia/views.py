@@ -44,6 +44,13 @@ class QuadroKanbanViewSet(viewsets.ModelViewSet):
 class CardKanbanViewSet(viewsets.ModelViewSet):
     queryset = CardKanban.objects.all()
     serializer_class = CardKanbanSerializer
+    
+    
+@api_view(['GET'])
+def buscar_projetos_usuario(request):
+    projetos = Projeto.objects.all()
+    serializer = ProjetoSerializer(projetos, many=True)
+    return Response({'projetos': serializer.data}, status=200)
 
 
 @api_view(['GET'])

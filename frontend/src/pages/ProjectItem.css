@@ -51,7 +51,7 @@ html, body, #root {
   padding: 20px;
   flex-grow: 1;
   overflow-y: auto;
-  position: relative; /* Essencial para posicionar os botões flutuantes dentro */
+  position: relative; 
 }
 
 .project-details-section {
@@ -195,7 +195,7 @@ ul {
 }
 
 .back-to-dashboard-button {
-  right: 100px; /* Posicionado à esquerda do botão de chat */
+  right: 100px; 
   background-color: #60a5fa;
   box-shadow: 0 4px 12px rgba(96, 165, 250, 0.3);
 }
@@ -213,8 +213,8 @@ ul {
 /* NOVO: Estilos para o Chat Flutuante */
 .floating-chat-box {
   position: fixed;
-  bottom: 100px; /* Acima do botão de chat */
-  right: 30px; /* Alinhado com o botão de chat */
+  bottom: 100px; 
+  right: 30px; 
   width: 350px;
   height: 400px;
   background-color: white;
@@ -222,9 +222,9 @@ ul {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
-  z-index: 999; /* Abaixo dos botões flutuantes, mas acima do conteúdo */
-  overflow: hidden; /* Garante que o conteúdo do chat não vaze */
-  animation: fadeIn 0.3s ease-out; /* Animação de entrada */
+  z-index: 999; 
+  overflow: hidden; 
+  animation: fadeIn 0.3s ease-out; 
 }
 
 @keyframes fadeIn {
@@ -264,10 +264,10 @@ ul {
 }
 
 .chat-messages {
-  flex-grow: 1; /* Ocupa o espaço restante */
+  flex-grow: 1; 
   padding: 15px 20px;
-  overflow-y: auto; /* Permite rolagem dentro das mensagens */
-  background-color: #f8fafc; /* Fundo mais claro para a área de mensagens */
+  overflow-y: auto; 
+  background-color: #f8fafc; 
 }
 
 .no-messages-text {
@@ -278,17 +278,17 @@ ul {
 }
 
 .chat-message-item {
-  background-color: #e0f2fe; /* Cor de fundo para as mensagens */
+  background-color: #e0f2fe; 
   padding: 10px 15px;
   border-radius: 8px;
   margin-bottom: 10px;
-  max-width: 90%; /* Limita a largura da mensagem */
-  word-wrap: break-word; /* Quebra palavras longas */
+  max-width: 90%;
+  word-wrap: break-word; 
   box-shadow: 0 1px 3px rgba(0,0,0,0.08);
 }
 
 .chat-message-item strong {
-  color: #1e40af; /* Cor para o remetente */
+  color: #1e40af; 
 }
 
 .chat-input-area {
@@ -339,10 +339,10 @@ ul {
 /* Media Queries para Responsividade do Chat */
 @media (max-width: 600px) {
   .floating-chat-box {
-    width: 90vw; /* Ocupa mais largura em telas pequenas */
-    height: 70vh; /* Ocupa mais altura */
-    right: 5vw; /* Centraliza horizontalmente */
-    bottom: 90px; /* Ajusta a posição inferior */
+    width: 90vw; 
+    height: 70vh; 
+    right: 5vw; 
+    bottom: 90px; 
   }
 
   .chat-floating-button,
@@ -358,6 +358,40 @@ ul {
   }
 
   .back-to-dashboard-button {
-    right: 80px; /* Mantém a distância entre os botões */
+    right: 80px; 
   }
+}
+
+
+.file-drop-area {
+  border: 2px dashed #2563eb;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  background-color: #f9fafb;
+  transition: background-color 0.3s ease;
+  margin-top: 20px;
+}
+
+.file-drop-area.dragging {
+  background-color: #e0f2fe;
+}
+
+.file-drop-area input[type="file"] {
+  margin-top: 10px;
+}
+
+.send-file-button {
+  margin-top: 10px;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.send-file-button:hover {
+  background-color: #1d4ed8;
 }
