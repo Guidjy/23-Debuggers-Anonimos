@@ -58,8 +58,8 @@ O **gerencia.ia** injeta IA em pontos críticos do fluxo de trabalho para elimin
 
 ```bash
 # Clone o repositório e acesse a pasta
-git clone [https://github.com/seu-usuario/seu-repositorio.git](https://github.com/seu-usuario/seu-repositorio.git)
-cd seu-repositorio/backend_folder
+git clone https://github.com/Guidjy/23-Debuggers-Anonimos.git
+cd 23-Debuggers-Anonimos/backend_folder
 
 # Crie e ative um ambiente virtual
 python -m venv venv
