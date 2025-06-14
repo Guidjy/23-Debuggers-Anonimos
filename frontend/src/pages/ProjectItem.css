@@ -1,3 +1,4 @@
+/* ProjectItem.css */
 * {
   padding: 0;
   margin: 0;
@@ -5,27 +6,69 @@
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.container {
+html, body, #root {
+  height: 100%; /* Garante que HTML, body e a div #root ocupem 100% da altura da viewport */
+  width: 100%;
+  overflow: hidden; /* Evita barras de rolagem indesejadas no nível da página */
+}
+
+/* Nova classe para o layout principal da página (SideBar + Conteúdo) */
+.project-page-layout { /* Renomeado de .area-dash */
+  display: flex; /* Permite que os filhos (SideBar e Conteúdo) fiquem lado a lado */
+  height: 100vh; /* Ocupa toda a altura da viewport */
+  width: 100vw; /* Ocupa toda a largura da viewport */
+  background-color: #eff6ff; /* Exemplo de cor de fundo, se precisar */
+}
+
+/* Estilo para a SideBar (assumindo que ela tenha uma largura fixa ou flexível) */
+.sidebar-component { /* Se o seu SideBar tem uma classe, adicione aqui */
+  flex-shrink: 0; /* Impede que a SideBar encolha */
+  width: 250px; /* Exemplo: Largura fixa para a SideBar. Ajuste conforme necessário. */
+  background-color: #ffffff; /* Exemplo de cor de fundo para a SideBar */
+  box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+  /* Outros estilos da sua SideBar */
+}
+
+/* Classe para a área principal de conteúdo (Header + Resto da Página) */
+.project-main-content {
+  display: flex;
+  margin-top: 60px;
+  flex-direction: column; /* Header e Wrapper ficam em coluna */
+  flex-grow: 1; /* Ocupa todo o espaço horizontal restante após a SideBar */
+  overflow: hidden; /* Garante que o scroll aconteça dentro desta área, se necessário */
+}
+
+/* O Header (assumindo que ele tem uma altura definida) */
+.header-component { /* Se o seu Header tem uma classe, adicione aqui */
+  flex-shrink: 0; /* Impede que o header encolha */
+  height: 70px; /* Exemplo: altura fixa do seu Header. Ajuste conforme necessário. */
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  /* Outros estilos do seu Header */
+}
+
+
+.project-page-wrapper {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  width: 100%;
-  max-width: 1400px;
-  margin: 20px auto;
-  padding: 0 20px;
-  min-height: calc(100vh - 80px);
+  gap: 10px;
+  width: 100%; /* Ocupa 100% da largura da área de conteúdo principal */
+  max-width: 1400px; /* Mantém o max-width para centralizar o conteúdo */
+  margin: 0 auto; /* Centraliza o conteúdo horizontalmente */
+  padding: 20px;
+  flex-grow: 1; /* Ocupa todo o espaço vertical restante abaixo do header */
+  overflow-y: auto; /* Permite rolagem vertical se o conteúdo exceder a altura */
 }
 
-.left {
+.project-details-section {
   display: grid;
-  grid-template-rows: auto 1fr auto;
+  grid-template-rows: auto 1fr auto; /* Mantém a estrutura de grid para as cards de detalhes */
   gap: 20px;
-  height: 100%;
+  /* height: 100%; Removido pois a altura será gerida pelo flex-grow do wrapper */
 }
 
-.left-one,
-.left-two,
-.left-three {
+.details-card-one,
+.details-card-two {
   background-color: white;
   padding: 24px;
   border-radius: 12px;
@@ -33,28 +76,23 @@
   border: 1px solid #e2e8f0;
 }
 
-.left-one {
+.details-card-one {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 20px;
 }
 
-.left-three {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.two {
+.project-tasks-section {
   background-color: white;
   padding: 32px;
   border-radius: 12px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   border: 1px solid #e2e8f0;
+  flex-grow: 1; /* Permite que esta seção cresça para preencher o espaço disponível */
 }
 
-.tap-button {
+.cta-button {
   background-color: #2563eb;
   color: white;
   border: none;
@@ -65,29 +103,29 @@
   transition: all 0.2s ease;
 }
 
-.tap-button:hover {
+.cta-button:hover {
   background-color: #1d4ed8;
   transform: translateY(-1px);
 }
 
-.task-lists {
+.project-task-boards {
   display: flex;
   gap: 1.5rem;
   overflow-x: auto;
   padding-bottom: 0.5rem;
 }
 
-.task-list {
+.task-board-column {
   background-color: #f0f9ff;
   border-radius: 0.75rem;
   padding: 1rem 1.25rem;
   min-width: 250px;
-  max-height: 70vh;
+  max-height: 70vh; /* Ajuste este valor se for necessário para as colunas rolarem */
   display: flex;
   flex-direction: column;
 }
 
-.list-title {
+.board-column-title {
   font-weight: 600;
   margin-bottom: 1rem;
   color: #1e40af;
@@ -100,7 +138,7 @@ ul {
   overflow-y: auto;
 }
 
-.task-item {
+.board-task-item {
   background: white;
   padding: 0.5rem 0.75rem;
   margin-bottom: 0.5rem;
@@ -109,43 +147,51 @@ ul {
 }
 
 @media (max-width: 768px) {
-  .container {
-    grid-template-columns: 1fr;
+  .project-page-layout {
+    flex-direction: column; /* Em telas pequenas, SideBar fica em cima */
+  }
+
+  .sidebar-component {
+    width: 100%; /* SideBar ocupa toda a largura em telas pequenas */
+    height: auto; /* Altura automática */
+  }
+
+  .project-page-wrapper {
     padding: 10px;
   }
 
-  .left {
-    grid-template-rows: auto;
+  .project-details-section {
+    grid-template-columns: 1fr;
     gap: 15px;
   }
 }
 
-.floating-button {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background-color: #2563eb;
-    color: white;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-    z-index: 1000;
-  }
-  
-  .floating-button:hover {
-    background-color: #1d4ed8;
-    transform: scale(1.1);
-    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
-  }
-  
-  .floating-button:active {
-    transform: scale(0.95);
-  }
+.chat-floating-button {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+.chat-floating-button:hover {
+  background-color: #1d4ed8;
+  transform: scale(1.1);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
+}
+
+.chat-floating-button:active {
+  transform: scale(0.95);
+}

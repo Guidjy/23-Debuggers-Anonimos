@@ -52,6 +52,7 @@ A proposta é utilizar inteligência artificial para:
 
 ```bash
 npm install react-router-dom
+npm install react-icons
 npm start
 
 ### Backend
