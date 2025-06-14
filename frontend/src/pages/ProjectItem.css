@@ -7,64 +7,57 @@
 }
 
 html, body, #root {
-  height: 100%; /* Garante que HTML, body e a div #root ocupem 100% da altura da viewport */
+  height: 100%;
   width: 100%;
-  overflow: hidden; /* Evita barras de rolagem indesejadas no nível da página */
+  overflow: hidden;
 }
 
-/* Nova classe para o layout principal da página (SideBar + Conteúdo) */
-.project-page-layout { /* Renomeado de .area-dash */
-  display: flex; /* Permite que os filhos (SideBar e Conteúdo) fiquem lado a lado */
-  height: 100vh; /* Ocupa toda a altura da viewport */
-  width: 100vw; /* Ocupa toda a largura da viewport */
-  background-color: #eff6ff; /* Exemplo de cor de fundo, se precisar */
+.project-page-layout {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  background-color: #eff6ff;
 }
 
-/* Estilo para a SideBar (assumindo que ela tenha uma largura fixa ou flexível) */
-.sidebar-component { /* Se o seu SideBar tem uma classe, adicione aqui */
-  flex-shrink: 0; /* Impede que a SideBar encolha */
-  width: 250px; /* Exemplo: Largura fixa para a SideBar. Ajuste conforme necessário. */
-  background-color: #ffffff; /* Exemplo de cor de fundo para a SideBar */
+.sidebar-component {
+  flex-shrink: 0;
+  width: 250px;
+  background-color: #ffffff;
   box-shadow: 2px 0 5px rgba(0,0,0,0.05);
-  /* Outros estilos da sua SideBar */
 }
 
-/* Classe para a área principal de conteúdo (Header + Resto da Página) */
 .project-main-content {
   display: flex;
-  margin-top: 60px;
-  flex-direction: column; /* Header e Wrapper ficam em coluna */
-  flex-grow: 1; /* Ocupa todo o espaço horizontal restante após a SideBar */
-  overflow: hidden; /* Garante que o scroll aconteça dentro desta área, se necessário */
+  flex-direction: column;
+  flex-grow: 1;
+  overflow: hidden;
+  margin-top: 55px;
 }
 
-/* O Header (assumindo que ele tem uma altura definida) */
-.header-component { /* Se o seu Header tem uma classe, adicione aqui */
-  flex-shrink: 0; /* Impede que o header encolha */
-  height: 70px; /* Exemplo: altura fixa do seu Header. Ajuste conforme necessário. */
+.header-component {
+  flex-shrink: 0;
+  height: 70px;
   background-color: #ffffff;
   box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-  /* Outros estilos do seu Header */
 }
-
 
 .project-page-wrapper {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  width: 100%; /* Ocupa 100% da largura da área de conteúdo principal */
-  max-width: 1400px; /* Mantém o max-width para centralizar o conteúdo */
-  margin: 0 auto; /* Centraliza o conteúdo horizontalmente */
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
   padding: 20px;
-  flex-grow: 1; /* Ocupa todo o espaço vertical restante abaixo do header */
-  overflow-y: auto; /* Permite rolagem vertical se o conteúdo exceder a altura */
+  flex-grow: 1;
+  overflow-y: auto;
+  position: relative; /* Essencial para posicionar os botões flutuantes dentro */
 }
 
 .project-details-section {
   display: grid;
-  grid-template-rows: auto 1fr auto; /* Mantém a estrutura de grid para as cards de detalhes */
+  grid-template-rows: auto 1fr auto;
   gap: 20px;
-  /* height: 100%; Removido pois a altura será gerida pelo flex-grow do wrapper */
 }
 
 .details-card-one,
@@ -89,7 +82,7 @@ html, body, #root {
   border-radius: 12px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   border: 1px solid #e2e8f0;
-  flex-grow: 1; /* Permite que esta seção cresça para preencher o espaço disponível */
+  flex-grow: 1;
 }
 
 .cta-button {
@@ -120,7 +113,7 @@ html, body, #root {
   border-radius: 0.75rem;
   padding: 1rem 1.25rem;
   min-width: 250px;
-  max-height: 70vh; /* Ajuste este valor se for necessário para as colunas rolarem */
+  max-height: 70vh;
   display: flex;
   flex-direction: column;
 }
@@ -148,12 +141,12 @@ ul {
 
 @media (max-width: 768px) {
   .project-page-layout {
-    flex-direction: column; /* Em telas pequenas, SideBar fica em cima */
+    flex-direction: column;
   }
 
   .sidebar-component {
-    width: 100%; /* SideBar ocupa toda a largura em telas pequenas */
-    height: auto; /* Altura automática */
+    width: 100%;
+    height: auto;
   }
 
   .project-page-wrapper {
@@ -166,24 +159,29 @@ ul {
   }
 }
 
-.chat-floating-button {
+/* Estilos para os botões flutuantes */
+.chat-floating-button,
+.back-to-dashboard-button {
   position: fixed;
   bottom: 30px;
-  right: 30px;
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background-color: #2563eb;
   color: white;
   border: none;
   font-size: 24px;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
   z-index: 1000;
+}
+
+.chat-floating-button {
+  right: 30px;
+  background-color: #2563eb;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
 }
 
 .chat-floating-button:hover {
@@ -195,24 +193,11 @@ ul {
 .chat-floating-button:active {
   transform: scale(0.95);
 }
+
 .back-to-dashboard-button {
-  position: fixed; /* Fixado na viewport */
-  bottom: 30px; /* Alinhado com o botão de chat */
-  right: 100px; /* Deslocado para a esquerda para não sobrepor o botão de chat */
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  background-color: #60a5fa; /* Uma cor diferente para distinção */
-  color: white;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
+  right: 100px; /* Posicionado à esquerda do botão de chat */
+  background-color: #60a5fa;
   box-shadow: 0 4px 12px rgba(96, 165, 250, 0.3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-  z-index: 1000; /* Garante que fique acima de outros elementos */
 }
 
 .back-to-dashboard-button:hover {
@@ -223,4 +208,156 @@ ul {
 
 .back-to-dashboard-button:active {
   transform: scale(0.95);
+}
+
+/* NOVO: Estilos para o Chat Flutuante */
+.floating-chat-box {
+  position: fixed;
+  bottom: 100px; /* Acima do botão de chat */
+  right: 30px; /* Alinhado com o botão de chat */
+  width: 350px;
+  height: 400px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  z-index: 999; /* Abaixo dos botões flutuantes, mas acima do conteúdo */
+  overflow: hidden; /* Garante que o conteúdo do chat não vaze */
+  animation: fadeIn 0.3s ease-out; /* Animação de entrada */
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background-color: #2563eb;
+  color: white;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  font-weight: 600;
+}
+
+.chat-header h4 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.chat-close-button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+
+.chat-close-button:hover {
+  opacity: 1;
+}
+
+.chat-messages {
+  flex-grow: 1; /* Ocupa o espaço restante */
+  padding: 15px 20px;
+  overflow-y: auto; /* Permite rolagem dentro das mensagens */
+  background-color: #f8fafc; /* Fundo mais claro para a área de mensagens */
+}
+
+.no-messages-text {
+  text-align: center;
+  color: #64748b;
+  font-style: italic;
+  margin-top: 20px;
+}
+
+.chat-message-item {
+  background-color: #e0f2fe; /* Cor de fundo para as mensagens */
+  padding: 10px 15px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  max-width: 90%; /* Limita a largura da mensagem */
+  word-wrap: break-word; /* Quebra palavras longas */
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+.chat-message-item strong {
+  color: #1e40af; /* Cor para o remetente */
+}
+
+.chat-input-area {
+  display: flex;
+  padding: 15px 20px;
+  border-top: 1px solid #e2e8f0;
+  background-color: #ffffff;
+}
+
+.chat-input-area input {
+  flex-grow: 1;
+  padding: 10px 15px;
+  border: 1px solid #cbd5e1;
+  border-radius: 20px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.chat-input-area input:focus {
+  border-color: #2563eb;
+}
+
+.send-message-button {
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 15px;
+  margin-left: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+}
+
+.send-message-button:hover {
+  background-color: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+.send-message-button:active {
+  transform: translateY(0);
+}
+
+/* Media Queries para Responsividade do Chat */
+@media (max-width: 600px) {
+  .floating-chat-box {
+    width: 90vw; /* Ocupa mais largura em telas pequenas */
+    height: 70vh; /* Ocupa mais altura */
+    right: 5vw; /* Centraliza horizontalmente */
+    bottom: 90px; /* Ajusta a posição inferior */
+  }
+
+  .chat-floating-button,
+  .back-to-dashboard-button {
+    bottom: 20px;
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+  }
+
+  .chat-floating-button {
+    right: 20px;
+  }
+
+  .back-to-dashboard-button {
+    right: 80px; /* Mantém a distância entre os botões */
+  }
 }

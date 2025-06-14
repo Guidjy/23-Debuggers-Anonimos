@@ -1,9 +1,10 @@
+import { useState, useRef, useEffect } from 'react'; // Importe useState, useRef e useEffect
+import { useNavigate } from 'react-router-dom';
 import ProgressBar from "../components/ProgressBar";
 import Header from "../components/Header";
-import SideBar from "../components/SideBar"; // Certifique-se de que o caminho está correto
+import SideBar from "../components/SideBar";
 import ButtonCircle from "../components/ButtonCircle";
-import { FaRocketchat, FaArrowLeft } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom'; // Importe useNavigate
+import { FaRocketchat, FaArrowLeft, FaPaperPlane } from 'react-icons/fa'; // Adicione FaPaperPlane para o botão de enviar
 import "./ProjectItem.css";
 
 const ProjectItem = () => {
@@ -25,16 +26,45 @@ const ProjectItem = () => {
     },
   ];
 
-  const navigate = useNavigate(); // Inicialize o hook de navegação
+  const navigate = useNavigate();
+  const messagesEndRef = useRef(null); // Ref para rolar automaticamente para a última mensagem
+
+  // Estados para o chat
+  const [showChat, setShowChat] = useState(false);
+  const [messages, setMessages] = useState([]); // Array para armazenar as mensagens
+  const [currentMessage, setCurrentMessage] = useState(''); // Estado para o texto digitado
+
+  // Função para rolar para o final das mensagens
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  // Efeito para rolar para o final sempre que novas mensagens forem adicionadas
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   const handleGoBack = () => {
-    navigate('/dashboard'); // Navega de volta para o dashboard
+    navigate('/dashboard');
+  };
+
+  // Função para togglar a visibilidade do chat
+  const toggleChat = () => {
+    setShowChat(prev => !prev);
+  };
+
+  // Função para enviar uma nova mensagem
+  const handleSendMessage = () => {
+    if (currentMessage.trim() !== '') {
+      setMessages(prev => [...prev, { text: currentMessage, sender: 'You' }]); // Adicione a nova mensagem
+      setCurrentMessage(''); // Limpa o input
+    }
   };
 
   return (
-    <div className="project-page-layout"> {/* Renomeado de 'area-dash' para algo mais descritivo para esta página */}
+    <div className="project-page-layout">
       <SideBar />
-      <div className="project-main-content"> {/* Adicionada uma classe aqui para estilização */}
+      <div className="project-main-content">
         <Header />
         <div className="project-page-wrapper">
           <div className="project-details-section">
@@ -64,13 +94,50 @@ const ProjectItem = () => {
               ))}
             </div>
           </div>
-           {/* Botão flutuante para voltar ao dashboard */}
-           <button className="back-to-dashboard-button" onClick={handleGoBack}>
+
+          {/* Botão flutuante para voltar ao dashboard */}
+          <button className="back-to-dashboard-button" onClick={handleGoBack}>
             <FaArrowLeft/>
           </button>
-          <button className="chat-floating-button">
+
+          {/* Botão flutuante de chat - agora com onClick para togglar */}
+          <button className="chat-floating-button" onClick={toggleChat}>
             <FaRocketchat/>
           </button>
+
+          {/* Chat flutuante - renderizado condicionalmente */}
+          {showChat && (
+            <div className="floating-chat-box">
+              <div className="chat-header">
+                <h4>Chat do Projeto</h4>
+                <button className="chat-close-button" onClick={toggleChat}>X</button>
+              </div>
+              <div className="chat-messages">
+                {messages.length === 0 ? (
+                  <p className="no-messages-text">Nenhuma mensagem ainda. Comece a conversar!</p>
+                ) : (
+                  messages.map((msg, index) => (
+                    <div key={index} className="chat-message-item">
+                      <strong>{msg.sender}:</strong> {msg.text}
+                    </div>
+                  ))
+                )}
+                <div ref={messagesEndRef} /> {/* Elemento para rolagem automática */}
+              </div>
+              <div className="chat-input-area">
+                <input
+                  type="text"
+                  placeholder="Digite sua mensagem..."
+                  value={currentMessage}
+                  onChange={(e) => setCurrentMessage(e.target.value)}
+                  onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()} // Enviar ao pressionar Enter
+                />
+                <button onClick={handleSendMessage} className="send-message-button">
+                  <FaPaperPlane />
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
