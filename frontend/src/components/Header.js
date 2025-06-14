@@ -25,10 +25,15 @@ function Header() {
     navigate('/login');
   }
 
+  function handleLogoClick() {
+    // Atualiza a página ao clicar na logo
+    window.location.reload();
+  }
+
   return (
     <>
       <header className="header">
-        <div className="logo">
+        <div className="logo" onClick={handleLogoClick} role="button" tabIndex={0} onKeyDown={e => e.key === 'Enter' && handleLogoClick()}>
           gerencia.<span className="logo-highlight">ia</span>
         </div>
 
@@ -82,7 +87,8 @@ function Header() {
             font-size: 1.5rem;
             letter-spacing: 0.05em;
             user-select: none;
-            cursor: default;
+            cursor: pointer;
+            margin-left: 10px;
           }
           .logo-highlight {
             color: #93c5fd; /* azul claro */
