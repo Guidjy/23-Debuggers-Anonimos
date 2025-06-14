@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FaUser } from 'react-icons/fa';
 
 function Header() {
   const [open, setOpen] = useState(false);
@@ -44,7 +45,7 @@ function Header() {
             aria-haspopup="true"
             aria-expanded={open}
           >
-            <div className="avatar">V</div>
+            <div className="avatar"><FaUser/></div>
             <span className="profile-name">Vitória</span>
             <svg
               className={`chevron ${open ? 'open' : ''}`}
