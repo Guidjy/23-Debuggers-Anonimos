@@ -14,8 +14,6 @@
 - Guilherme Patrício Pimentel – Implementação das rotas e integração com banco de dados
 - Vitor Dallabona – Criação dos modelos, controle de dados e lógica de IA
 
----
-
 ## 💡 Tema
 **Inteligência Artificial aplicada ao que a sua imaginação permitir**
 
@@ -28,7 +26,6 @@ A gestão de projetos tradicional sofre com ineficiências que atrasam a entrega
 * **Dados Fragmentados:** Planos e status existem em silos, impedindo uma visão unificada do progresso.
 * **Alta Carga Operacional:** Gestores investem tempo excessivo em tarefas manuais, como criar cronogramas e compilar relatórios.
 * **Decisões Reativas:** A falta de insights em tempo real leva a uma gestão que apenas reage a problemas, em vez de antecipá-los.
----
 
 ## ✅ Descrição da Solução Proposta
 O **gerencia.ia** injeta IA em pontos críticos do fluxo de trabalho para eliminar a fricção e potencializar a tomada de decisão.
@@ -42,18 +39,15 @@ O **gerencia.ia** injeta IA em pontos críticos do fluxo de trabalho para elimin
 
 * **Como funciona:** A IA monitora o andamento das tarefas e gera, sob demanda, **resumos executivos** sobre a saúde do projeto.
 * **Resultado:** Transforma a gestão reativa em **proativa**, baseando decisões em insights atuais e não em compilações manuais demoradas.
----
 
 ## 🛠️ Tecnologias Utilizadas
 
-- **Frontend**: React.js, react-icons, CSS, JavaScript
+- **Frontend**: React.js, CSS, JavaScript, React-icons
 - **Backend**: Django, Python
 - **Banco de Dados**: SQLite
 - **Outras**: React Router Dom
 - **IA**: Chat GPT, Gemini, DeepSeek
 - **API**: Gemini API
-
----
 
 ## 📦 Instruções de Instalação e Execução
 
