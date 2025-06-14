@@ -5,8 +5,6 @@ function Layout() {
 
   const links = [
     { id: "dashboard", label: "Dashboard", href: "#" },
-    { id: "projects", label: "Projetos", href: "#" },
-    { id: "settings", label: "Configurações", href: "#" },
   ];
 
   return (
