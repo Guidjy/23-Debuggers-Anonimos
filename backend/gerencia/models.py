@@ -55,6 +55,7 @@ class TarefaEAP(models.Model):
     titulo = models.CharField(max_length=70)
     descricao = models.CharField(max_length=140)
     
+    eap = models.ForeignKey(EstruturaAnaliticaProjeto, on_delete=models.CASCADE)
     responsaveis = models.ManyToManyField(Funcionario, related_name='tarefas')
     projeto = models.ForeignKey(Projeto, on_delete=models.CASCADE, related_name='tarefas')
     
