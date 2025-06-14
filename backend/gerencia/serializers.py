@@ -34,13 +34,13 @@ class EAPSerializer(serializers.ModelSerializer):
 
 class TarefaEAPSerializer(serializers.ModelSerializer):
     class Meta:
-        model = QuadroKanban
+        model = TarefaEAP
         fields = '__all__'
         
         
 class QuadroKanbanSerializer(serializers.ModelSerializer):
     class Meta:
-        model = TarefaEAP
+        model = QuadroKanban
         fields = '__all__'
         
 

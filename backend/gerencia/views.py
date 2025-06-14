@@ -19,3 +19,34 @@ class ProjetoViewSet(viewsets.ModelViewSet):
 class RelatorioProjetoViewSet(viewsets.ModelViewSet):
     queryset = RelatorioProjeto.objects.all()
     serializer_class = RelatorioProjetoSerializer
+    
+
+class FuncionarioViewSet(viewsets.ModelViewSet):
+    queryset = Funcionario.objects.all()
+    serializer_class = FuncionarioSerializer
+    
+    
+class TAPViewSet(viewsets.ModelViewSet):
+    queryset = TermoAberturaProjeto.objects.all()
+    serializer_class = TAPSerializer
+    
+
+class EAPViewSet(viewsets.ModelViewSet):
+    queryset = EstruturaAnaliticaProjeto.objects.all()
+    serializer_class = EAPSerializer
+ 
+
+class TarefaEAPViewSet(viewsets.ModelViewSet):
+    queryset = TarefaEAP.objects.all()
+    serializer_class = TarefaEAPSerializer
+    
+
+class QuadroKanbanViewSet(viewsets.ModelViewSet):
+    queryset = QuadroKanban.objects.all()
+    serializer_class = QuadroKanbanSerializer
+    
+    
+class CardKanbanViewSet(viewsets.ModelViewSet):
+    queryset = CardKanban.objects.all()
+    serializer_class = CardKanbanSerializer
+        
