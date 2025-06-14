@@ -44,22 +44,12 @@ class TermoAberturaProjeto(models.Model):
 
 class EstruturaAnaliticaProjeto(models.Model):
     n_tarefas = models.IntegerField(default=0)
+    documento = models.FileField(upload_to='documentos/', null=True, blank=True)
     
     projeto = models.ForeignKey(Projeto, on_delete=models.CASCADE)
     
     def __str__(self):
         return f'eap do projeto {self.projeto}'
-    
-
-class TarefaEAP(models.Model):
-    titulo = models.CharField(max_length=70)
-    descricao = models.CharField(max_length=140)
-    
-    responsaveis = models.ManyToManyField(Funcionario, related_name='tarefas')
-    projeto = models.ForeignKey(Projeto, on_delete=models.CASCADE, related_name='tarefas')
-    
-    def __str__(self):
-        return self.titulo
     
 
 class QuadroKanban(models.Model):
@@ -75,10 +65,11 @@ class QuadroKanban(models.Model):
 class CardKanban(models.Model):
     tarefa = models.CharField(max_length=70)
     status = models.CharField(max_length=20, default="para fazer")
-    descricao = models.CharField(max_length=140, blank=True, null=True)
-    data_de_entrega = models.DateField()    
+    data_de_entrega = models.DateField(blank=True, null=True)    
     
     quadro = models.ForeignKey(QuadroKanban, on_delete=models.CASCADE)
+    responsaveis = models.ManyToManyField(Funcionario, related_name='tarefas', blank=True)
+
     
     def __str__(self):
         return self.tarefa
