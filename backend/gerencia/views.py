@@ -3,7 +3,7 @@ from rest_framework.decorators import api_view
 
 from rest_framework import viewsets
 from .models import Projeto, RelatorioProjeto, Funcionario, TermoAberturaProjeto, EstruturaAnaliticaProjeto, TarefaEAP, QuadroKanban, CardKanban
-from .serializers import ProjetoSerializer, RelatorioProjeto, FuncionarioSerializer, TAPSerializer, EAPSerializer, TarefaEAPSerializer, QuadroKanbanSerializer, CardKanbanSerializer
+from .serializers import ProjetoSerializer, RelatorioProjetoSerializer, FuncionarioSerializer, TAPSerializer, EAPSerializer, TarefaEAPSerializer, QuadroKanbanSerializer, CardKanbanSerializer
 
 # Create your views here.
 @api_view(['GET'])
@@ -14,3 +14,8 @@ def teste(request):
 class ProjetoViewSet(viewsets.ModelViewSet):
     queryset = Projeto.objects.all()
     serializer_class = ProjetoSerializer
+    
+
+class RelatorioProjetoViewSet(viewsets.ModelViewSet):
+    queryset = RelatorioProjeto.objects.all()
+    serializer_class = RelatorioProjetoSerializer
