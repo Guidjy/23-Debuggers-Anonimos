@@ -1,25 +1,52 @@
+import { useState } from 'react';
 import Header from '../components/Header';
 import SideBar from '../components/SideBar';
 
 function Dashboard() {
-  // Exemplo simples de listas e tarefas (pode vir do estado ou props)
-  const taskLists = [
+  const [taskLists, setTaskLists] = useState([
     {
       id: 1,
-      title: 'Para Fazer',
-      tasks: ['Comprar insumos', 'Enviar relatório', 'Revisar código'],
+      title: 'Projeto 1',
+      responsavel: 'Vitória',
+      entrega: '20/06/2025',
+      status: 'Em andamento',
     },
     {
       id: 2,
-      title: 'Em Progresso',
-      tasks: ['Desenvolver novo módulo', 'Testar integração'],
+      title: 'Projeto 2',
+      responsavel: 'Giulia',
+      entrega: '25/06/2025',
+      status: 'Concluído',
     },
     {
       id: 3,
-      title: 'Concluídas',
-      tasks: ['Planejar sprint', 'Reunião com cliente'],
+      title: 'Projeto 3',
+      responsavel: 'Lucas',
+      entrega: '30/06/2025',
+      status: 'Aguardando aprovação',
     },
-  ];
+    {
+      id: 4,
+      title: 'Projeto 4',
+      responsavel: 'Marcos',
+      entrega: '05/07/2025',
+      status: 'Em planejamento',
+    },
+    {
+      id: 5,
+      title: 'Projeto 5',
+      responsavel: 'Beatriz',
+      entrega: '10/07/2025',
+      status: 'Cancelado',
+    },
+  ]);
+
+  const handleDelete = (id) => {
+    const confirm = window.confirm('Tem certeza que deseja excluir este projeto?');
+    if (confirm) {
+      setTaskLists((prev) => prev.filter((proj) => proj.id !== id));
+    }
+  };
 
   return (
     <>
@@ -30,11 +57,11 @@ function Dashboard() {
 
           <div className="card">
             <div className="card-header">
-              <h2>Minhas Tarefas</h2>
+              <h2>Meus Projetos</h2>
               <button
                 className="add-button"
-                title="Adicionar tarefa"
-                aria-label="Adicionar tarefa"
+                title="Adicionar projeto"
+                aria-label="Adicionar projeto"
               >
                 +
               </button>
@@ -43,13 +70,21 @@ function Dashboard() {
             <div className="task-lists">
               {taskLists.map((list) => (
                 <div key={list.id} className="task-list">
+                  <button
+                    className="delete-button"
+                    title="Excluir projeto"
+                    onClick={(e) => {
+                      e.stopPropagation(); // previne propagação caso clique no card
+                      handleDelete(list.id);
+                    }}
+                  >
+                    ×
+                  </button>
                   <h3 className="list-title">{list.title}</h3>
                   <ul>
-                    {list.tasks.map((task, i) => (
-                      <li key={i} className="task-item">
-                        {task}
-                      </li>
-                    ))}
+                    <li><strong>Responsável:</strong> {list.responsavel}</li>
+                    <li><strong>Entrega:</strong> {list.entrega}</li>
+                    <li><strong>Status:</strong> {list.status}</li>
                   </ul>
                 </div>
               ))}
@@ -63,8 +98,8 @@ function Dashboard() {
           .dashboard {
             display: flex;
             height: 100vh;
-            background-color: #eff6ff; /* bg-blue-50 */
-            color: #1e293b; /* gray-800 */
+            background-color: #eff6ff;
+            color: #1e293b;
           }
 
           .main-area {
@@ -99,7 +134,7 @@ function Dashboard() {
           }
 
           .add-button {
-            background-color: #2563eb; /* blue-600 */
+            background-color: #2563eb;
             color: white;
             font-size: 2rem;
             width: 48px;
@@ -115,52 +150,73 @@ function Dashboard() {
           }
 
           .add-button:hover {
-            background-color: #1e40af; /* blue-800 */
+            background-color: #1e40af;
           }
 
           .task-lists {
             display: flex;
-            gap: 1.5rem;
-            overflow-x: auto;
-            padding-bottom: 0.5rem;
+            flex-wrap: wrap;
+            gap: 1.25rem;
+            justify-content: flex-start;
           }
 
           .task-list {
-            background-color: #f0f9ff; /* azul clarinho */
+            background-color: #f0f9ff;
             border-radius: 0.75rem;
             padding: 1rem 1.25rem;
-            min-width: 250px;
-            max-height: 70vh;
+            min-width: 220px;
+            max-width: 25%;
+            flex: 1 1 22%;
             display: flex;
             flex-direction: column;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+          }
+
+          .task-list:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+          }
+
+          .delete-button {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.75rem;
+            background: transparent;
+            border: none;
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #1e40af;
+            cursor: pointer;
+          }
+
+          .delete-button:hover {
+            color: #b91c1c;
           }
 
           .list-title {
             font-weight: 600;
             margin-bottom: 1rem;
-            color: #1e40af; /* azul escuro */
+            color: #1e40af;
           }
 
           ul {
             list-style: none;
             padding-left: 0;
             margin: 0;
-            overflow-y: auto;
           }
 
-          .task-item {
-            background: white;
-            padding: 0.5rem 0.75rem;
+          ul li {
             margin-bottom: 0.5rem;
-            border-radius: 0.5rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            cursor: default;
-            user-select: none;
-            transition: background-color 0.2s ease;
+            font-size: 0.95rem;
           }
 
-          .task-item:hover {
-            background-color: #dbeafe; /* azul claro hover */
+          @media (max-width: 768px) {
+            .task-list {
+              flex: 1 1 100%;
+              max-width: 100%;
+            }
           }
         `}
       </style>
