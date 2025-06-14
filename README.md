@@ -1,5 +1,13 @@
 # gerencia.ia: Inteligência Artificial na Gestão de Projetos
 
+Plataforma de gestão de projetos que aplica IA para centralizar, automatizar e acelerar o fluxo de trabalho. Desenvolvida para o Code Race 25.
+
+[![React][React-shield]][React-url]
+[![Django][Django-shield]][Django-url]
+[![Python][Python-shield]][Python-url]
+[![SQLite][SQLite-shield]][SQLite-url]
+
+---
 ## 🧠 Nome da Equipe
 **Debuggers Anônimos**
 
@@ -21,7 +29,8 @@
 **Gestão de Projetos**
 
 ## ❗ Problema a Ser Resolvido
-A gestão de projetos tradicional sofre com ineficiências que atrasam a entrega de valor.
+No ambiente de negócios atual, a agilidade é um pré-requisito competitivo. No entanto, muitas organizações ainda enfrentam atritos operacionais significativos na gestão de seus projetos, o que compromete a velocidade e a eficácia da entrega de valor.
+O problema central não é a falta de ferramentas, mas a lacuna entre os dados do projeto e a inteligência acionável. Identificamos três pontos de fricção principais:
 
 * **Dados Fragmentados:** Planos e status existem em silos, impedindo uma visão unificada do progresso.
 * **Alta Carga Operacional:** Gestores investem tempo excessivo em tarefas manuais, como criar cronogramas e compilar relatórios.
